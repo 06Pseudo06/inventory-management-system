@@ -1,0 +1,14 @@
+<h2>Items</h2>
+
+<ul>
+  {% for item in items %}
+    <li>
+      {{ item.name }} —
+      Quantity: {{ item.quantity }}
+    </li>
+  {% empty %}
+    <li>No items available.</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'create-transaction' %}">Create Transaction</a>

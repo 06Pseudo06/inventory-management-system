@@ -7,6 +7,10 @@ class InventoryConfig(AppConfig):
     name = 'inventory'
 
     def ready(self):
+        # Only run in production (Render)
+        if not os.getenv("RENDER"):
+            return
+
         User = get_user_model()
 
         username = os.getenv("DJANGO_SUPERUSER_USERNAME")

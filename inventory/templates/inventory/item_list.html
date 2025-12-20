@@ -1,3 +1,11 @@
+{% extends 'inventory/base.html' %}
+{% load static %}
+
+{% block title %}Items{% endblock %}
+
+{% block content %}
+
+
 <h2>Items</h2>
 
 <ul>
@@ -12,3 +20,5 @@
 </ul>
 
 <a href="{% url 'create-transaction' %}">Create Transaction</a>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Inventory System{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'inventory/styles.css' %}">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="nav-left">
+        <strong>Inventory Management</strong>
+    </div>
+    <div class="nav-right">
+        <a href="{% url 'item-list' %}">Items</a>
+        <a href="{% url 'create-transaction' %}">New Transaction</a>
+        <a href="/admin/">Admin</a>
+        <a href="/admin/logout/">Logout</a>
+    </div>
+</header>
+
+<main class="container">
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+</main>
+
+</body>
+</html>

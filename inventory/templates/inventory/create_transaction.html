@@ -1,47 +1,57 @@
 {% extends 'inventory/base.html' %}
-{% load static %}
 
-{% block title %}Items{% endblock %}
+{% block title %}New Transaction{% endblock %}
 
 {% block content %}
 
+<div class="center-wrapper">
+    <div class="form-card">
 
-<h2>Create Transaction</h2>
+<h2>New Inventory Transaction</h2>
 
-<form method="post">
-  {% csrf_token %}
+<form method="post" class="form">
+    {% csrf_token %}
 
-  <label>Item:</label>
-  <select name="item" required>
-    {% for item in items %}
-      <option value="{{ item.id }}">{{ item.name }}</option>
-    {% endfor %}
-  </select>
+    <div class="form-group">
+        <label for="item">Item</label>
+        <select name="item" id="item" required>
+            <option value="">Select an item</option>
+            {% for item in items %}
+                <option value="{{ item.id }}">
+                    {{ item.name }} (Available: {{ item.quantity }})
+                </option>
+            {% endfor %}
+        </select>
+    </div>
 
-  <br><br>
+    <div class="form-group">
+        <label for="transaction_type">Transaction Type</label>
+        <select name="transaction_type" id="transaction_type" required>
+            {% for key, label in transaction_types %}
+                <option value="{{ key }}">{{ label }}</option>
+            {% endfor %}
+        </select>
+        <small class="hint">
+            Inbound adds stock. Outbound reduces stock.
+        </small>
+    </div>
 
-  <label>Type:</label>
-  <select name="transaction_type" required>
-    {% for code, label in transaction_types %}
-      <option value="{{ code }}">{{ label }}</option>
-    {% endfor %}
-  </select>
+    <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" name="quantity" id="quantity" min="1" required>
+    </div>
 
-  <br><br>
+    <div class="form-group">
+        <label for="remark">Remark (optional)</label>
+        <textarea name="remark" id="remark" rows="3"></textarea>
+    </div>
 
-  <label>Quantity:</label>
-  <input type="number" name="quantity" min="1" required>
-
-  <br><br>
-
-  <label>Remark:</label>
-  <input type="text" name="remark">
-
-  <br><br>
-
-  <button type="submit">Submit</button>
+    <button type="submit" class="btn-primary">
+        Submit Transaction
+    </button>
 </form>
+</div>
+</div>
 
-<a href="{% url 'item-list' %}">Back to Items</a>
 
 {% endblock %}

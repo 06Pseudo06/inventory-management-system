@@ -9,8 +9,6 @@ from inventory.services.inventory_service import create_transaction
 
 @login_required
 def create_inventory_transaction(request):
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     items = Item.objects.filter(is_active=True)
 

@@ -18,7 +18,10 @@
         <a href="{% url 'item-list' %}">Items</a>
         <a href="{% url 'create-transaction' %}">New Transaction</a>
         <a href="/admin/">Admin</a>
-        <a href="/admin/logout/">Logout</a>
+       <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
     </div>
 </header>
 

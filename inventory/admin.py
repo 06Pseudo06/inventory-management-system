@@ -20,12 +20,24 @@ class ItemAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('transaction_type', 'item', 'quantity', 'performed_by', 'created_at')
-    list_filter = ('transaction_type', 'created_at')
-    readonly_fields = ('created_at',)
+    list_display = (
+        "transaction_type",
+        "item",
+        "quantity",
+        "performed_by",
+        "created_at",
+    )
+    readonly_fields = (
+        "transaction_type",
+        "item",
+        "quantity",
+        "performed_by",
+        "remark",
+        "created_at",
+    )
 
     def has_add_permission(self, request):
-        return request.user.is_staff
+        return False
 
     def has_change_permission(self, request, obj=None):
         return False

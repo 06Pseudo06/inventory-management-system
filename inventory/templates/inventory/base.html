@@ -1,11 +1,9 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Inventory System{% endblock %}</title>
-
     <link rel="stylesheet" href="{% static 'inventory/styles.css' %}">
 </head>
 <body>
@@ -14,14 +12,24 @@
     <div class="nav-left">
         <strong>Inventory Management</strong>
     </div>
-    <div class="nav-right">
-        <a href="{% url 'item-list' %}">Items</a>
-        <a href="{% url 'create-transaction' %}">New Transaction</a>
-        <a href="/admin/">Admin</a>
-       <form method="post" action="{% url 'logout' %}">
+
+    <div class="nav-right icon-nav">
+
+        <a href="{% url 'item-list' %}" class="nav-icon" data-label="Items">
+            <img src="{% static 'inventory/item.png' %}" alt="Items">
+        </a>
+
+        <a href="{% url 'create-transaction' %}" class="nav-icon" data-label="New Transaction">
+            <img src="{% static 'inventory/add-to-cart.png' %}" alt="New Transaction">
+        </a>
+
+        <form method="post" action="{% url 'logout' %}" class="logout-form nav-icon" data-label="Logout">
             {% csrf_token %}
-            <button type="submit">Logout</button>
+            <button type="submit" class="icon-btn">
+                <img src="{% static 'inventory/logout.png' %}" alt="Logout">
+            </button>
         </form>
+
     </div>
 </header>
 

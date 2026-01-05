@@ -1,19 +1,46 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="{% static 'inventory/styles.css' %}">
 </head>
-<body>
-    <h2>Login</h2>
+<body class="auth-body">
 
-    {% if form.errors %}
-        <p style="color:red;">Invalid username or password.</p>
-    {% endif %}
+<div class="auth-background"></div>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
+<div class="auth-wrapper">
+    <div class="auth-card">
+
+        <h2 class="auth-title">Login</h2>
+
+        {% if form.errors %}
+            <div class="message error auth-error">
+                Invalid username or password.
+            </div>
+        {% endif %}
+
+        <form method="post" class="form auth-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                {{ form.password }}
+            </div>
+
+            <button type="submit" class="btn-primary auth-btn">
+                Login
+            </button>
+        </form>
+
+    </div>
+</div>
+
 </body>
 </html>

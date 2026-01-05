@@ -430,3 +430,42 @@ textarea {
         font-size: 18px;
     }
 }
+
+/* ============DashBoard=============== */
+
+.stats {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stats div {
+    padding: 0.75rem;
+    background: #f5f5f5;
+    border-radius: 6px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+}
+
+.low-stock {
+    background-color: #ffe6e6;
+}
+
+.badge-in {
+    color: green;
+    font-weight: bold;
+}
+
+.badge-out {
+    color: red;
+    font-weight: bold;
+}

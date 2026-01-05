@@ -15,6 +15,10 @@
 
     <div class="nav-right icon-nav">
 
+        <a href="{% url 'dashboard' %}" class="nav-icon" data-label="Dashboard">
+            <img src="{% static 'inventory/dashboard.png' %}" alt="Dashboard">
+        </a>
+
         <a href="{% url 'item-list' %}" class="nav-icon" data-label="Items">
             <img src="{% static 'inventory/item.png' %}" alt="Items">
         </a>

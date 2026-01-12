@@ -1,106 +1,150 @@
 {% extends "inventory/base.html" %}
 
 {% block content %}
-<h1>Dashboard</h1>
+<div class="dashboard">
 
+<h1>Inventory Dashboard</h1>
+
+<!-- ================= Stats ================= -->
 <div class="stats">
-    <div>Total Items: <strong>{{ total_items }}</strong></div>
-    <div>Active Items: <strong>{{ active_items }}</strong></div>
-    <div>Low Stock Items: <strong>{{ low_stock_items|length }}</strong></div>
+    <div class="stat-card">
+        <span>Total Items</span>
+        <strong>{{ total_items }}</strong>
+    </div>
+    <div class="stat-card">
+        <span>Active Items</span>
+        <strong>{{ active_items }}</strong>
+    </div>
+    <div class="stat-card">
+        <span>Low Stock</span>
+        <strong>{{ low_stock_items|length }}</strong>
+    </div>
 </div>
 
 <hr>
 
+<!-- ================= Low Stock ================= -->
 <h2>Low Stock Items</h2>
+
 {% if low_stock_items %}
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Quantity</th>
-        <th>Min Threshold</th>
-    </tr>
-    {% for item in low_stock_items %}
-    <tr class="low-stock">
-        <td>{{ item.name }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.min_threshold }}</td>
-    </tr>
-    {% endfor %}
-</table>
+<div class="low-stock-section">
+    <table class="table low-stock-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Min Threshold</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in low_stock_items %}
+            <tr class="low-stock">
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.min_threshold }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% else %}
-<p>No low-stock items 🎉</p>
+<p>No low-stock items.</p>
 {% endif %}
 
 <hr>
 
-{% if low_stock_items %}
-<h2>Stock Levels</h2>
-<canvas id="stockChart" height="100"></canvas>
-
+<!-- ================= Stock Chart ================= -->
+<h2>Stock Levels (All Items)</h2>
+<canvas id="stockChart" width="600" height="300"></canvas>
 {{ stock_chart_data|json_script:"stock-data" }}
 
-{% endif %}
-
 <hr>
 
+<!-- ================= Transactions ================= -->
 <h2>Recent Transactions</h2>
+
 {% if recent_transactions %}
-<table>
-    <tr>
-        <th>Type</th>
-        <th>Item</th>
-        <th>Qty</th>
-        <th>User</th>
-        <th>Date</th>
-    </tr>
-    {% for txn in recent_transactions %}
-    <tr>
-        <td>
-            {% if txn.transaction_type == "IN" %}
-                <span class="badge-in">IN</span>
-            {% else %}
-                <span class="badge-out">OUT</span>
-            {% endif %}
-        </td>
-        <td>{{ txn.item.name }}</td>
-        <td>{{ txn.quantity }}</td>
-        <td>{{ txn.performed_by }}</td>
-        <td>{{ txn.created_at|date:"Y-m-d H:i" }}</td>
-    </tr>
-    {% endfor %}
+<table class="txn-table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>User</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for txn in recent_transactions %}
+        <tr>
+            <td>
+                {% if txn.transaction_type == "IN" %}
+                    <span class="txn-badge in">IN</span>
+                {% else %}
+                    <span class="txn-badge out">OUT</span>
+                {% endif %}
+            </td>
+            <td>{{ txn.item.name }}</td>
+            <td>{{ txn.quantity }}</td>
+            <td>{{ txn.performed_by }}</td>
+            <td>{{ txn.created_at|date:"d M Y, H:i" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
 {% else %}
 <p>No transactions yet.</p>
 {% endif %}
+
+</div>  <!-- ✅ dashboard wrapper closed properly -->
 {% endblock %}
 
 {% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 
 <script>
-const dataElement = document.getElementById("stock-data");
-const ctx = document.getElementById("stockChart");
+(function () {
+    const dataEl = document.getElementById("stock-data");
+    const canvas = document.getElementById("stockChart");
 
-if (dataElement && ctx) {
-    const items = JSON.parse(dataElement.textContent);
+    if (!dataEl || !canvas) return;
 
-    new Chart(ctx, {
+    const items = JSON.parse(dataEl.textContent);
+    if (!items.length) return;
+
+    new Chart(canvas, {
         type: "bar",
         data: {
-            labels: items.map(item => item.name),
+            labels: items.map(i => i.name),
             datasets: [{
-                label: "Quantity",
-                data: items.map(item => item.quantity),
-                backgroundColor: "#4f46e5"
+                data: items.map(i => i.quantity),
+                backgroundColor:  "#97BEDB",
+                borderColor: "#022C4A",
+                borderWidth: 1,
+                borderRadius: 6,
+                hoverBackgroundColor: "#376482"
             }]
         },
         options: {
-            responsive: true,
+            responsive: false,
+            animation: false,
             plugins: {
-                legend: { display: false }
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: "#111827",
+                    padding: 10
+                }
+            },
+            scales: {
+                x: { ticks: { color: "#374151" } },
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: "#374151" }
+                }
             }
         }
     });
-}
+})();
 </script>
 {% endblock %}

@@ -15,6 +15,12 @@
 
     <div class="nav-right icon-nav">
 
+        {% if request.user.is_superuser %}
+            <a href="/admin/" class="nav-icon" data-label="Admin Panel">
+                <img src="{% static 'inventory/admin.png' %}" alt="Admin">
+            </a>
+        {% endif %}
+
         <a href="{% url 'dashboard' %}" class="nav-icon" data-label="Dashboard">
             <img src="{% static 'inventory/dashboard.png' %}" alt="Dashboard">
         </a>
@@ -53,5 +59,6 @@
 
 </main>
 
+{% block scripts %}{% endblock %}
 </body>
 </html>

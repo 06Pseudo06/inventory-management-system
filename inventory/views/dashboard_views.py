@@ -10,16 +10,17 @@ def dashboard(request):
     if not request.user.is_staff:
         raise PermissionDenied
 
+    all_items = Item.objects.all()
     low_stock_qs = Item.objects.low_stock()
-    recent_txn_qs = Transaction.objects.recent(20)
+    recent_txn_qs = Transaction.objects.recent(6)
 
-    # ✅ Convert queryset → serializable data
+    # Chart data → ALL items
     stock_chart_data = list(
-        low_stock_qs.values("name", "quantity")
+        all_items.values("name", "quantity")
     )
 
     context = {
-        "total_items": Item.objects.count(),
+        "total_items": all_items.count(),
         "active_items": Item.objects.active().count(),
         "low_stock_items": low_stock_qs,
         "recent_transactions": recent_txn_qs,

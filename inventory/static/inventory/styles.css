@@ -594,3 +594,38 @@ textarea {
     border-radius: 6px;
 }
 
+/* ---------- Pagination ---------- */
+
+.container .pagination {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.container .page-info {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.container .page-actions {
+    display: flex;
+    gap: 18px;
+}
+
+.container .page-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4f82f0;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.container .page-link:hover {
+    background-color: rgba(37, 99, 235, 0.08);
+    color: #1d4ed8;
+}
+

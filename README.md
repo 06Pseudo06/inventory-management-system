@@ -1,129 +1,170 @@
-# INVENTORY MANAGEMENT SYSTEM (V1)
+# 🧾 Inventory Management System (Django)
 
-A Django-based inventory management system designed with data integrity, role-based access, & transactional accuracy at its core.  
-This project focuses on building a realistic backend architecture suitable for real-world inventory workflows.  
+A **role-based inventory management system** built with Django, focused on **data integrity**, **transactional correctness**, and **clean backend architecture**, with a functional dashboard UI for operational use.
 
-⚠️ Project Status: Under active development.  
-> v1 represents the core system with validated business logic and access control.  
-
-
-## OVERVIEW
-
-This system manages inventory items and tracks all stock changes through immutable transactions.  
-Instead of directly modifying stock values, every inventory update is recorded as a transaction, ensuring auditability and correctness.  
-The project is intentionally backend-focused, prioritizing clean architecture, correctness, and scalability over UI complexity.  
+> **Status:** v4 complete & stable  
+> Designed as a production-minded learning project showcasing backend engineering fundamentals
 
 
-## KEY FEATURES (V1)
+## 🔍 Project Overview
 
-### Inventory Core:-   
-• Item management with current stock tracking  
-• Minimum stock threshold support  
-• Soft deactivation of items (no destructive deletes)  
+This project manages inventory items and tracks all stock changes through a **transaction-driven model**.  
+Instead of directly editing stock values, every change is recorded as a transaction, ensuring:
 
-### Transaction System:- 
-• Stock IN / OUT handled exclusively via transactions  
-• Automatic stock updates  
-• Prevention of negative inventory  
-• Immutable transaction history  
+- **Traceability**
+- **Auditability**
+- **Consistent business rules**
 
-### Role-Based Access Control:- 
-• Admin  
-&nbsp;&nbsp;&nbsp;&nbsp;• Full access  
-&nbsp;&nbsp;&nbsp;&nbsp;• Create/edit items  
-&nbsp;&nbsp;&nbsp;&nbsp;• View all data  
-• Staff  
-&nbsp;&nbsp;&nbsp;&nbsp;• Create inventory transactions  
-&nbsp;&nbsp;&nbsp;&nbsp;• View inventory  
-• Unauthorized users  
-&nbsp;&nbsp;&nbsp;&nbsp;• No access  
-
-### Admin Safety :-
-• Direct stock editing disabled  
-• Transactions are append-only  
-• All mutations routed through service-layer logic  
+The system includes a dashboard for operational users and integrates **Django Admin** for secure management tasks.
 
 
-## ARCHITECTURE HIGHLIGHTS
+## ✨ Key Features
 
-The project follows a layered architecture:  
-&nbsp;&nbsp;• Models → Define data and relationships  
-&nbsp;&nbsp;• Services → Enforce business rules and invariants  
-&nbsp;&nbsp;• Views → Handle HTTP requests only  
-&nbsp;&nbsp;• Admin → Safe operational interface  
-&nbsp;&nbsp;• Permissions → Explicit and enforced  
-  
-This separation ensures:  
-&nbsp;&nbsp;• Maintainability  
-&nbsp;&nbsp;• Testability  
-&nbsp;&nbsp;• Protection against accidental data corruption  
+### 📦 Inventory Management
+- Item creation with stock quantity tracking
+- Minimum stock threshold support
+- Soft-deletion (items can be deactivated, not destroyed)
+- Visual identification of low-stock items
 
-  
-## TECH STACK
+### 🔄 Transaction System
+- Stock **IN / OUT** handled exclusively via transactions
+- Automatic quantity updates
+- Prevention of negative inventory
+- Immutable transaction history
 
-• Backend: Django (Python)  
-• Database (v1): SQLite (development)  
-• Authentication: Django built-in auth system  
-• Frontend: Django templates (minimal UI)  
-• Version Control: Git & GitHub  
+### 📊 Dashboard
+- Inventory summary statistics
+- Low-stock items table
+- Recent transaction overview
+- Stock-level visualization using **Chart.js**
+
+### 👥 Role-Based Access Control
+- **Admin (Superuser)**
+  - Full system access
+  - Django admin panel
+  - Inventory & transaction management
+- **Staff**
+  - Dashboard access
+  - Inventory visibility
+  - Transaction creation
+- **Unauthorized users**
+  - No access
+
+### 🧭 Usability & UI
+- Clean, consistent table styling
+- Paginated item listing for scalability
+- Role-aware navigation (admin links shown only to admins)
 
 
-## RUNNING LOCALLY (DEVELOPMENT)
 
- ### Clone repository
-`git clone https://github.com/<your-username>/inventory-management-system.git`  
-`cd inventory-management-system`
+## 🧱 Architecture & Design Decisions
 
-### Create virtual environment
-`python -m venv env`  
-`env\Scripts\activate  # Windows`
+The project follows a **layered and maintainable architecture**:
+
+- **Models** — Define data structures and relationships  
+- **Views** — Handle HTTP requests and orchestration  
+- **Templates** — Minimal, functional UI  
+- **Admin** — Safe management interface  
+- **Permissions** — Explicit role-based access control  
+
+### Why this matters:
+- Prevents accidental data corruption
+- Keeps business rules centralized
+- Makes the system easy to extend and maintain
+
+
+
+## 🛠️ Tech Stack
+
+- **Backend:** Django (Python)
+- **Database (v1):** SQLite (development)
+- **Authentication:** Django built-in auth system
+- **Frontend:** Django templates, HTML, CSS
+- **Charts:** Chart.js
+- **Version Control:** Git & GitHub
+
+
+
+## ▶️ Running Locally
+
+### Clone the repository
+```bash
+git clone https://github.com/06Pseudo06/inventory-management-system.git
+cd inventory-management-system
+````
+
+### Create and activate virtual environment
+
+```bash
+python -m venv env
+env\Scripts\activate   # Windows
+```
 
 ### Install dependencies
-`pip install -r requirements.txt`  
+
+```bash
+pip install -r requirements.txt
+```
 
 ### Apply migrations
-`python manage.py migrate`  
+
+```bash
+python manage.py migrate
+```
 
 ### Create admin user
-`python manage.py createsuperuser`  
 
-### Run server
-`python manage.py runserver`  
+```bash
+python manage.py createsuperuser
+```
 
-Access:  
-Admin panel → http://127.0.0.1:8000/admin/  
-Inventory UI → http://127.0.0.1:8000/  
+### Run development server
 
+```bash
+python manage.py runserver
+```
 
-## CURRENT LIMITATIONS (INTENTIONAL)
+**Access:**
 
-• SQLite used only for development  
-• Minimal frontend UI  
-• No deployment configuration in v1  
-• No analytics dashboard yet  
-These are planned upgrades, not design gaps.  
-
-## ROADMAP (NEXT PHASE)
-
-Planned enhancements include:  
-
-• PostgreSQL integration  
-• Environment-based production settings  
-• Deployment (Render / Railway)  
-• Low-stock alerts and analytics  
-• Improved UI and reporting  
-• Automated tests  
-
-## PROJECT STATUS
-
-🚧 **Under Construction**
-This repository represents v1 (core system).  
-Further development will focus on making the system production-ready and deployable.  
-
-## AUTHOR
-
-*Built as a learning-driven yet production-oriented project to understand real backend system design using Django.*
+* **App UI:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+* **Admin panel:** [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
 
 
+## 🚧 Current Limitations (Intentional)
+
+* SQLite used for development only
+* Minimal UI (function-first design)
+* No deployment configuration in v1
+* Search & advanced filtering planned
+
+These are **deliberate scope decisions**, not architectural flaws.
+
+---
+
+## 🔮 Planned Enhancements
+
+* Item search & filtering
+* PostgreSQL integration
+* Production environment configuration
+
+## 🎯 What This Project Demonstrates
+
+* Backend system design thinking
+* Safe data mutation via transactions
+* Role-based authorization
+* Django ORM & admin proficiency
+* Pagination & scalable UI patterns
+* Clean Git workflow & project closure
+
+
+## 👤 Author
+
+Built as a **learning-driven, production-oriented project** to demonstrate real-world backend development practices using Django.
+
+
+### 📌 Note
+
+This project is intentionally scoped to demonstrate **correctness, structure, and extensibility**, rather than UI-heavy features.
+Future enhancements are planned and documented.
 

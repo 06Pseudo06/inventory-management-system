@@ -140,7 +140,6 @@ python manage.py runserver
 
 These are **deliberate scope decisions**, not architectural flaws.
 
----
 
 ## 🔮 Planned Enhancements
 
